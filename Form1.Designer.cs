@@ -28,6 +28,7 @@
         /// </summary>
         private void InitializeComponent()
         {
+            this.components = new System.ComponentModel.Container();
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
@@ -40,7 +41,9 @@
             this.bgWorker = new System.ComponentModel.BackgroundWorker();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.lblProgress = new System.Windows.Forms.Label();
-            this.webBrowser1 = new System.Windows.Forms.WebBrowser();
+            this.trackControl = new GPX.TrackControl();
+            this.settingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
+            ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).BeginInit();
             this.SuspendLayout();
             // 
             // label1
@@ -54,6 +57,7 @@
             // 
             // textBox1
             // 
+            this.textBox1.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.settingsBindingSource, "MapFile", true));
             this.textBox1.Location = new System.Drawing.Point(65, 9);
             this.textBox1.Name = "textBox1";
             this.textBox1.Size = new System.Drawing.Size(314, 20);
@@ -70,6 +74,7 @@
             // 
             // textBox2
             // 
+            this.textBox2.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.settingsBindingSource, "Start", true));
             this.textBox2.Location = new System.Drawing.Point(65, 36);
             this.textBox2.Name = "textBox2";
             this.textBox2.Size = new System.Drawing.Size(314, 20);
@@ -86,6 +91,7 @@
             // 
             // textBox3
             // 
+            this.textBox3.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.settingsBindingSource, "Destination", true));
             this.textBox3.Location = new System.Drawing.Point(65, 65);
             this.textBox3.Name = "textBox3";
             this.textBox3.Size = new System.Drawing.Size(314, 20);
@@ -125,7 +131,7 @@
             // 
             // progressBar
             // 
-            this.progressBar.Location = new System.Drawing.Point(13, 462);
+            this.progressBar.Location = new System.Drawing.Point(499, 13);
             this.progressBar.Name = "progressBar";
             this.progressBar.Size = new System.Drawing.Size(343, 23);
             this.progressBar.TabIndex = 9;
@@ -133,26 +139,55 @@
             // lblProgress
             // 
             this.lblProgress.AutoSize = true;
-            this.lblProgress.Location = new System.Drawing.Point(363, 468);
+            this.lblProgress.Location = new System.Drawing.Point(849, 19);
             this.lblProgress.Name = "lblProgress";
             this.lblProgress.Size = new System.Drawing.Size(75, 13);
             this.lblProgress.TabIndex = 10;
             this.lblProgress.Text = "Loading Paths";
             // 
-            // webBrowser1
+            // trackControl
             // 
-            this.webBrowser1.Location = new System.Drawing.Point(485, 191);
-            this.webBrowser1.MinimumSize = new System.Drawing.Size(20, 20);
-            this.webBrowser1.Name = "webBrowser1";
-            this.webBrowser1.Size = new System.Drawing.Size(250, 250);
-            this.webBrowser1.TabIndex = 11;
+            this.trackControl.AllowDrop = true;
+            this.trackControl.Anchor = ((System.Windows.Forms.AnchorStyles)((((System.Windows.Forms.AnchorStyles.Top | System.Windows.Forms.AnchorStyles.Bottom) 
+            | System.Windows.Forms.AnchorStyles.Left) 
+            | System.Windows.Forms.AnchorStyles.Right)));
+            this.trackControl.AutoScroll = true;
+            this.trackControl.CacheDate = new System.DateTime(((long)(0)));
+            this.trackControl.DrawPointsOfInterest = false;
+            this.trackControl.DrawTrackLine = false;
+            this.trackControl.DrawWaypoints = false;
+            this.trackControl.IndexOfFirstPointShown = 0;
+            this.trackControl.IndexOfLastPointShown = 0;
+            this.trackControl.Location = new System.Drawing.Point(0, 92);
+            this.trackControl.Name = "trackControl";
+            this.trackControl.PoIColor = System.Drawing.Color.DarkGreen;
+            this.trackControl.ShowAllPointsOfSegment = false;
+            this.trackControl.ShowMap = false;
+            this.trackControl.Size = new System.Drawing.Size(984, 405);
+            this.trackControl.StyleForPoI = GPX.WaypointsStyle.SmallCircle;
+            this.trackControl.StyleForWaypoints = GPX.WaypointsStyle.SmallCircle;
+            this.trackControl.TabIndex = 11;
+            this.trackControl.TrackColor = System.Drawing.Color.Red;
+            this.trackControl.TrackColorHighlight = System.Drawing.Color.Goldenrod;
+            this.trackControl.Tracks = null;
+            this.trackControl.TrackThickness = 3F;
+            this.trackControl.UseEqualScale = false;
+            this.trackControl.WayPointsColor = System.Drawing.Color.BlanchedAlmond;
+            this.trackControl.WayPointsHighlight = System.Drawing.Color.Gold;
+            this.trackControl.XCategory = GPX.DrawCategory.Time;
+            this.trackControl.YCategory = GPX.DrawCategory.Time;
+            this.trackControl.Zoom = 0F;
+            // 
+            // settingsBindingSource
+            // 
+            this.settingsBindingSource.DataSource = typeof(BikeMap.Settings);
             // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 497);
-            this.Controls.Add(this.webBrowser1);
+            this.Controls.Add(this.trackControl);
             this.Controls.Add(this.lblProgress);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.label4);
@@ -167,6 +202,8 @@
             this.Name = "Form1";
             this.Text = "Bike Map";
             this.Load += new System.EventHandler(this.Form1_Load);
+            this.Resize += new System.EventHandler(this.Form1_Resize);
+            ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).EndInit();
             this.ResumeLayout(false);
             this.PerformLayout();
 
@@ -186,7 +223,8 @@
         private System.ComponentModel.BackgroundWorker bgWorker;
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Label lblProgress;
-        private System.Windows.Forms.WebBrowser webBrowser1;
+        private GPX.TrackControl trackControl;
+        private System.Windows.Forms.BindingSource settingsBindingSource;
     }
 }
 

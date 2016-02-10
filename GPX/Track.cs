@@ -197,14 +197,14 @@ namespace GPX
             return points;
         }
 
-        public Track(Gpx.GpxTrack oldtrk)
+        public Track(Gpx.GpxTrack oldtrk) : this()
         {
             Comment = oldtrk.Comment;
             Description = oldtrk.Description;
             Name = oldtrk.Name;
             number = oldtrk.Number.ToString();
             srcField = oldtrk.Source;
-            TrackSegments = new List<TrackSegment>();
+
             foreach (Gpx.GpxTrackSegment oldseg in oldtrk.Segments)
             {
                 TrackSegment seg = new TrackSegment();

@@ -67,6 +67,7 @@
     <Compile Include="TrackControl.designer.cs">
       <DependentUpon>TrackControl.cs</DependentUpon>
     </Compile>
+    <Compile Include="TrackOnMap.cs" />
     <Compile Include="Vertex.cs" />
     <Compile Include="WayPointOnMap.cs" />
     <Compile Include="WayPointSelectedEventArgs.cs" />
@@ -89,6 +90,8 @@
       <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
       <SubType>Designer</SubType>
     </None>
+    <None Include="Properties\DataSources\Graph.datasource" />
+    <None Include="Properties\DataSources\Settings.datasource" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
       <LastGenOutput>Settings.Designer.cs</LastGenOutput>

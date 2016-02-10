@@ -1,3 +1,4 @@
+using BikeMap;
 using System;
 using System.Collections.Generic;
 using System.ComponentModel;
@@ -24,13 +25,13 @@ namespace GPX
         private int _LastMouseX;
         private int _LastMouseY;
 
-        private TrackSegment _Segment;
-        public TrackSegment TrackSegmentShown
+        private List<Track> _Tracks;
+        public List<Track> Tracks
         {
-            get { return _Segment; }
+            get { return _Tracks; }
             set
             {
-                _Segment = value;
+                _Tracks = value;
                 CreateWaypointsList();
             }
         }
@@ -226,13 +227,6 @@ namespace GPX
         private double _XFactor;
         private double _YFactor;
 
-        private bool _DrawPhotos;
-        public bool DrawPhotos
-        {
-            get { return _DrawPhotos; }
-            set { _DrawPhotos = value; }
-        }
-
         private bool _DrawPointsOfInterest;
         public bool DrawPointsOfInterest
         {
@@ -295,71 +289,64 @@ namespace GPX
                 _Core.StartSystem();
             }
         }
-
+        private List<TrackOnMap> _TracksOnMap;
         private void CreateWaypointsList()
         {
-            if (_Segment == null)
+            if (_Tracks == null)
+            {
                 _WayPointsOnMap = null;
+                _TracksOnMap = null;
+            }
             else
             {
                 _WayPointsOnMap = new List<WayPointOnMap>();
-                foreach (WayPoint wp in _Segment.WayPoints)
+                _TracksOnMap = new List<TrackOnMap>();
+                foreach (Track track in _Tracks)
                 {
-                    _WayPointsOnMap.Add(new WayPointOnMap(wp));
+                    TrackOnMap tom = new TrackOnMap();
+                    _TracksOnMap.Add(tom);
+                    foreach (TrackSegment seg in track.TrackSegments)
+                    {
+                        foreach (WayPoint wp in seg.WayPoints)
+                        {
+                            WayPointOnMap wop = new WayPointOnMap(wp);
+                            _WayPointsOnMap.Add(wop);
+                            tom.WayPoints.Add(wop);
+                        }
+                    }
                 }
             }
         }
 
         public void Draw()
         {
-            if ((_Segment == null) || (_Segment.WayPoints.Count == 0))
+            if ((_Tracks == null) || (_Tracks.Count == 0))
             {
                 //GPX_TrackControl_Draw0=The TrackSegment to be drawn was either not set or is empty.
                 throw new ApplicationException(ResourceManager.GetString("GPX_TrackControl_Draw0"));
             }
 
-            if ((_WayPointsOnMap == null) || (_WayPointsOnMap.Count != _Segment.WayPoints.Count))
+            if ((_WayPointsOnMap == null) || (_TracksOnMap.Count != _Tracks.Count))
                 CreateWaypointsList();
 
-            //determine hidden vs. shown waypoints and their applicable values
+            //determine applicable values
+            //get maximum and minimum for x and y values each
+            _XMax = double.MinValue;
+            _YMax = double.MinValue;
+            _XMin = double.MaxValue;
+            _YMin = double.MaxValue;
+
             foreach (WayPointOnMap wpm in _WayPointsOnMap)
             {
-                //if only a selection of points is to be shown, check the points if they are to be included
-                if (!_ShowAllPointsOfSegment)
-                {
-                    if (wpm.WayPoint.Index < _IndexOfFirstPointShown)
-                        wpm.IsHidden = true;
-                    else if (wpm.WayPoint.Index > _IndexOfLastPointShown)
-                        wpm.IsHidden = true;
-                    else
-                        wpm.IsHidden = false;
-                }
-                else
-                    wpm.IsHidden = false;
+                //Selected value: latitude, longitude, elevation, time, what ever....
+                wpm.XValue = GetSelectedValueFromWaypoint(wpm.WayPoint, _XCategory);
+                wpm.YValue = GetSelectedValueFromWaypoint(wpm.WayPoint, _YCategory);
+                _XMax = (_XMax < wpm.XValue) ? wpm.XValue : _XMax;
+                _YMax = (_YMax < wpm.YValue) ? wpm.YValue : _YMax;
+                _XMin = (_XMin > wpm.XValue) ? wpm.XValue : _XMin;
+                _YMin = (_YMin > wpm.YValue) ? wpm.YValue : _YMin;
+            }
 
-                if (!wpm.IsHidden)
-                {
-                    //Selected value: latitude, longitude, elevation, time, what ever....
-                    wpm.XValue = GetSelectedValueFromWaypoint(wpm.WayPoint, _XCategory);
-                    wpm.YValue = GetSelectedValueFromWaypoint(wpm.WayPoint, _YCategory);
-                }
-            }
-            //get maximum and minimum for x and y values each
-            int index = (_ShowAllPointsOfSegment ? 1 : _IndexOfFirstPointShown);
-            _XMax = _WayPointsOnMap[index - 1].XValue;
-            _YMax = _WayPointsOnMap[index - 1].YValue;
-            _XMin = _WayPointsOnMap[index - 1].XValue;
-            _YMin = _WayPointsOnMap[index - 1].YValue;
-            for (int i = 1; i < _WayPointsOnMap.Count; i++)
-            {
-                if (!_WayPointsOnMap[i].IsHidden)
-                {
-                    _XMax = (_XMax < _WayPointsOnMap[i].XValue) ? _WayPointsOnMap[i].XValue : _XMax;
-                    _YMax = (_YMax < _WayPointsOnMap[i].YValue) ? _WayPointsOnMap[i].YValue : _YMax;
-                    _XMin = (_XMin > _WayPointsOnMap[i].XValue) ? _WayPointsOnMap[i].XValue : _XMin;
-                    _YMin = (_YMin > _WayPointsOnMap[i].YValue) ? _WayPointsOnMap[i].YValue : _YMin;
-                }
-            }
             //get the size of control for drawing, reserve space for axes
             pnlImage.Width = Convert.ToInt32(this.ClientSize.Width * _Zoom);
             pnlImage.Height = Convert.ToInt32(this.ClientSize.Height * _Zoom);
@@ -379,7 +366,7 @@ namespace GPX
                 _Core.CurrentPosition = center;
                 _Core.MapType = _MapType;
 
-                //top left and bootom right: for calculating zoom
+                //top left and bottom right: for calculating zoom
                 GMap.NET.PointLatLng topLeft = new GMap.NET.PointLatLng(_YMax, _XMin);
                 GMap.NET.PointLatLng bottomRight = new GMap.NET.PointLatLng(_YMin, _XMax);
 
@@ -458,7 +445,7 @@ namespace GPX
             //and now draw it!
             _Bitmap = new Bitmap(pnlImage.Width, pnlImage.Height);
 
-            DrawTrack();
+            DrawTracks();
             if (_ShowMap)
             {
                 DrawGridForMap();
@@ -520,12 +507,21 @@ namespace GPX
             }
         }
 
-        private void DrawTrack()
+        private void DrawTracks()
         {
             Graphics graphics = Graphics.FromImage(_Bitmap);
+            foreach (TrackOnMap tom in _TracksOnMap)
+            {
+                DrawTrack(graphics, tom);
+            }
+            graphics.Dispose();
+        }
+
+        private void DrawTrack(Graphics graphics, TrackOnMap track)
+        {
             Point previous = new Point();
             Point nullPoint = new Point();
-            foreach (WayPointOnMap wpm in _WayPointsOnMap)
+            foreach (WayPointOnMap wpm in track.WayPoints)
             {
                 if (wpm.IsHidden)
                 {
@@ -549,7 +545,6 @@ namespace GPX
                     previous = p2;
                 }
             }
-            graphics.Dispose();
         }
 
         private void DrawWaypoint(Graphics graphics, Point point, Point previousPoint, bool highLighted)
@@ -1005,7 +1000,7 @@ namespace GPX
                             _SelectedWayPointOnMap.XPixels = e.X;
                             _SelectedWayPointOnMap.YPixels = e.Y;
                         }
-                        DrawTrack();
+                        DrawTracks();
                     }
                     else
                     {
@@ -1111,7 +1106,8 @@ namespace GPX
                         int y = e.Y + _TopOffset - _TopMargin;
                         SetWaypointValueForCoordinates(_SelectedWayPointOnMap.WayPoint, x, y);
                         _SelectedWayPointOnMap = null;
-                        _Segment.Recalculate();
+                        foreach (Track track in _Tracks)
+                            track.Recalculate();
                         Draw();
                     }
                 }
@@ -1276,7 +1272,7 @@ namespace GPX
                     }
                 }
 
-                DrawTrack();
+                DrawTracks();
                 DrawGridForMap();
                 DrawPoI();
 

@@ -12,23 +12,24 @@ namespace BikeMap
     public class Graph
     {
         public List<WayPoint> Vertices { get; protected set; }
+        public List<Vertex> Waypoints { get; protected set; }
+        public List<Track> Tracks { get; protected set; }
 
         public Edge[,] edges;
         public Graph(string gpx)
         {
             Vertices = new List<WayPoint>();
-
-            List<Vertex> waypoints = new List<Vertex>();
+            Tracks = new List<Track>();
+            Waypoints = new List<Vertex>();
 
             // Read in the GPX file
-            GPXType map;
             try
             {
-                map = GPXType.FromFile(gpx);
+                GPXType map = GPXType.FromFile(gpx);
+                Tracks = map.Tracks;
             }
             catch (InvalidOperationException)
             {
-                map = new GPXType();
                 //Version 2.0
                 using (GpxReader reader = new GpxReader(new FileStream(gpx, FileMode.Open)))
                 {
@@ -39,12 +40,12 @@ namespace BikeMap
                             case GpxObjectType.Metadata:
                                 break;
                             case GpxObjectType.WayPoint:
-                                waypoints.Add(new Vertex(reader.WayPoint));
+                                Waypoints.Add(new Vertex(reader.WayPoint));
                                 break;
                             case GpxObjectType.Route:
                                 break;
                             case GpxObjectType.Track:
-                                map.Tracks.Add(new Track(reader.Track));
+                                Tracks.Add(new Track(reader.Track));
                                 break;
                         }
                     }
@@ -52,10 +53,10 @@ namespace BikeMap
             }
 
             // Find out how many points we have (total waypoints and trackpoints)
-            int sum = waypoints.Count;
-            Vertices.AddRange(waypoints);
+            int sum = Waypoints.Count;
+            Vertices.AddRange(Waypoints);
 
-            foreach (Track track in map.Tracks)
+            foreach (Track track in Tracks)
             {
                 var points = track.ToWayPoints();
                 sum += points.Count;
@@ -66,7 +67,7 @@ namespace BikeMap
             }
 
             // We finally know how many vertices we have so we can construct the matrix
-            FillMatrix(waypoints, map.Tracks, sum);
+            FillMatrix(Waypoints, Tracks, sum);
 
         }
 
