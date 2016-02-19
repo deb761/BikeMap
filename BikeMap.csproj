@@ -68,6 +68,7 @@
       <DependentUpon>TrackControl.cs</DependentUpon>
     </Compile>
     <Compile Include="TrackOnMap.cs" />
+    <Compile Include="PointOfInterest.cs" />
     <Compile Include="Vertex.cs" />
     <Compile Include="WayPointOnMap.cs" />
     <Compile Include="WayPointSelectedEventArgs.cs" />

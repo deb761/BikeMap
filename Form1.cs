@@ -76,7 +76,7 @@ namespace BikeMap
             {
                 if (trackControl.Tracks == null)
                     trackControl.Tracks = graph.Tracks;
-                trackControl.SetPointsOfInterest(graph.Vertices);
+                trackControl.SetPointsOfInterest(graph.Waypoints);
                 trackControl.CacheDate = new DateTime(2000, 1, 1);
 
 

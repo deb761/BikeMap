@@ -10,11 +10,12 @@ namespace BikeMap
     public class Edge
     {
         public double Weight { get; set; }
-        public WayPoint P1 { get; protected set; }
-        public WayPoint P2 { get; protected set; }
-        public Edge(WayPoint v1, WayPoint v2)
+        public Vertex P1 { get; protected set; }
+        public Vertex P2 { get; protected set; }
+        protected Edge() { }
+        public Edge(Vertex v1, Vertex v2)
         {
-            Weight = v1.GetDistanceFrom(v2);
+            Weight = v1.Point.GetDistanceFrom(v2.Point);
             P1 = v1;
             P2 = v2;
         }
