@@ -143,8 +143,8 @@ namespace BikeMap
                        dist[i][j] ← dist[i][k] + dist[k][j]
                        next[i][j] ← next[i][k]
                        */
-        private double[,] dist;
-        private int?[,] next;
+        protected double[,] dist;
+        protected int?[,] next;
         public void FloydWarshall()
         {
             // define and initialize dist and next matrices
