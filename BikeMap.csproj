@@ -51,6 +51,7 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ChainHash.cs" />
     <Compile Include="Defaults.cs" />
     <Compile Include="Edge.cs" />
     <Compile Include="Enums.cs" />
