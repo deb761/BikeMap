@@ -26,14 +26,14 @@ namespace BikeMap
        /// <returns>hash number for this string</returns>
         public int Hash(string str)
         {
-            int hash = 5381;
+            ulong hash = 5381;
 
             foreach (char chr in str)
             {
-                hash = ((hash << 5) + hash) + (int)chr; /* hash * 33 + chr */
+                hash = ((hash << 5) + hash) + (ulong)chr; /* hash * 33 + chr */
             }
 
-            return hash;
+            return (int)(hash % (ulong)table.Length);
         }
         /// <summary>
         /// A class unique to the hash table to create nodes for the hash table lists.
@@ -61,6 +61,10 @@ namespace BikeMap
             {
                 Key = key;
                 Data = obj;
+            }
+            public override int GetHashCode()
+            {
+                return base.GetHashCode();
             }
         }
         /// <summary>
@@ -102,13 +106,13 @@ namespace BikeMap
         public void Insert(string key, Object obj)
         {
             ChainObj newObj = new ChainObj(key, obj);
-            int hash = key.GetHashCode();
+            int hash = Hash(str: key);
             ChainObj hashObj = table[hash];
             if (hashObj == null)
                 table[hash] = newObj;
             else
             {
-                newObj = hashObj.Next;
+                newObj.Next = hashObj;
                 table[hash] = newObj;
             }
         }
@@ -123,7 +127,7 @@ namespace BikeMap
         /// <returns>object if found, null otherwise</returns>
         public Object Find(string key)
         {
-            int hash = key.GetHashCode();
+            int hash = Hash(str: key);
             ChainObj obj = table[hash];
             if (obj == null)
                 return default(Object);
@@ -148,7 +152,7 @@ namespace BikeMap
         /// <param name="key"></param>
         public void Remove(string key)
         {
-            int hash = key.GetHashCode();
+            int hash = Hash(key);
             ChainObj obj = table[hash];
             if (obj == null)
                 return;
@@ -167,7 +171,7 @@ namespace BikeMap
                         prev.Next = obj.Next; // remove the object from the list
                         return;
                     }
-                    prev = obj.Next;
+                    prev = prev.Next;
                 }
             }
         }
