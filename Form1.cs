@@ -48,18 +48,18 @@ namespace BikeMap
             trackControl.Zoom = _Zoom;
 
             //how to show waypoints
-            trackControl.DrawWaypoints = true;
+            trackControl.DrawWaypoints = false;
             trackControl.StyleForWaypoints = WaypointsStyle.SmallCircle;
             trackControl.WayPointsColor = Color.Aqua;
             trackControl.WayPointsHighlight = Color.Gold;
 
             trackControl.DrawPointsOfInterest = true;
             trackControl.StyleForPoI = WaypointsStyle.BigX;
-            trackControl.PoIColor = Color.DarkGreen;
+            trackControl.PoIColor = Color.DarkRed;
 
             trackControl.DrawTrackLine = true;
             trackControl.TrackThickness = 2.0f;
-            trackControl.TrackColor = Color.Red;
+            trackControl.TrackColor = Color.Green;
             trackControl.TrackColorHighlight = Color.Goldenrod;
 
             trackControl.ShowMap = true;
@@ -135,7 +135,7 @@ namespace BikeMap
         private void cbxEnd_SelectedIndexChanged(object sender, EventArgs e)
         {
             if (!bgWorker.IsBusy) // make sure the Floyd-Warshall algorithm has finished running
-                bxShortest.Text = graph.Distance((Vertex)cbxStart.SelectedValue, (Vertex)cbxEnd.SelectedValue).ToString();
+                bxShortest.Text = string.Format("{0:F2} km", graph.Distance((Vertex)cbxStart.SelectedValue, (Vertex)cbxEnd.SelectedValue) / 1000.0);
         }
     }
 }

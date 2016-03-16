@@ -182,6 +182,7 @@ namespace BikeMap
                 }
                 worker.ReportProgress(ipass * 100 / Vertices.Count);
             }
+            worker.ReportProgress(100);
         }
         /// <summary>
         /// Set up the dist and next matrices to use in the Floyd-Warshall algorithm
