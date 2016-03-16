@@ -1,5 +1,6 @@
 ﻿using GPX;
 using System;
+using System.Collections.Generic;
 using System.ComponentModel;
 using System.Drawing;
 using System.Windows.Forms;
@@ -17,13 +18,31 @@ namespace BikeMap
         /// Object to hold user settings
         /// </summary>
         private Settings settings = new Settings();
-
+        /// <summary>
+        /// Waypoints for the destination combobox
+        /// </summary>
+        private List<Vertex> waypoints;
+        /// <summary>
+        /// Load the graph from the mapfile and kickoff the background worker to calculate the
+        /// shortest paths, then draw the tracks on the map.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void Form1_Load(object sender, EventArgs e)
         {
             graph = new Graph(settings.MapFile);
+            bgWorker.RunWorkerAsync();
+
+            cbxStart.DataSource = graph.Vertices;
+            cbxStart.DisplayMember = "Name";
+
+            // create another list of waypoints for the destination box, since they need to be bound
+            // to different lists
+            waypoints = new List<Vertex>(graph.Vertices);
+            cbxEnd.DataSource = waypoints;
+            cbxEnd.DisplayMember = "Name";
 
             settingsBindingSource.DataSource = settings;
-            bgWorker.RunWorkerAsync();
 
             trackControl.UseEqualScale = true;
             trackControl.Zoom = _Zoom;
@@ -31,7 +50,7 @@ namespace BikeMap
             //how to show waypoints
             trackControl.DrawWaypoints = true;
             trackControl.StyleForWaypoints = WaypointsStyle.SmallCircle;
-            trackControl.WayPointsColor = Color.BlanchedAlmond;
+            trackControl.WayPointsColor = Color.Aqua;
             trackControl.WayPointsHighlight = Color.Gold;
 
             trackControl.DrawPointsOfInterest = true;
@@ -39,7 +58,7 @@ namespace BikeMap
             trackControl.PoIColor = Color.DarkGreen;
 
             trackControl.DrawTrackLine = true;
-            trackControl.TrackThickness = 3.0f;
+            trackControl.TrackThickness = 2.0f;
             trackControl.TrackColor = Color.Red;
             trackControl.TrackColorHighlight = Color.Goldenrod;
 
@@ -52,21 +71,36 @@ namespace BikeMap
 
             Redraw();
         }
-
+        /// <summary>
+        /// Update the progress bar so the user knows how far along the calculations are.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void bgWorker_ProgressChanged(object sender, ProgressChangedEventArgs e)
         {
-
+            progressBar.Value = e.ProgressPercentage;
         }
-
+        /// <summary>
+        /// Let the user know the algorithm is complete by updating the progress label.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void bgWorker_RunWorkerCompleted(object sender, RunWorkerCompletedEventArgs e)
         {
             lblProgress.Text = "Done calculating Shortest Paths";
         }
-
-        Graph graph;
+        /// <summary>
+        /// The graph object that contains the tracks and calculates the shortest paths
+        /// </summary>
+        private Graph graph;
+        /// <summary>
+        /// Run the Floyd-Warshall algorithm in the background.
+        /// </summary>
+        /// <param name="sender"></param>
+        /// <param name="e"></param>
         private void bgWorker_DoWork(object sender, DoWorkEventArgs e)
         {
-
+            graph.FloydWarshall(bgWorker);
         }
         /* This section is for drawing the tracks */
         private Single _Zoom = 1.0f;
@@ -96,6 +130,12 @@ namespace BikeMap
         private void Form1_Resize(object sender, EventArgs e)
         {
             Redraw();
+        }
+
+        private void cbxEnd_SelectedIndexChanged(object sender, EventArgs e)
+        {
+            if (!bgWorker.IsBusy) // make sure the Floyd-Warshall algorithm has finished running
+                bxShortest.Text = graph.Distance((Vertex)cbxStart.SelectedValue, (Vertex)cbxEnd.SelectedValue).ToString();
         }
     }
 }

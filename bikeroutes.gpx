@@ -10,7 +10,8 @@
 		<name>Cascadia</name>
 	</wpt>
 	<wpt lat="47.7562907" lon="-122.1890938">
-	</wpt>
+    <name>Cascadia Bus Stop</name>
+  </wpt>
 	<wpt lat="47.7530376" lon="-122.1660805">
 		<name>Woodinville Park</name>
 	</wpt>
@@ -69,7 +70,8 @@
 		<name>Performance Bike</name>
 	</wpt>
 	<wpt lat="47.6610519" lon="-122.3022938">
-	</wpt>
+    <name>Convenience Store</name>
+  </wpt>
 	<wpt lat="47.6615722" lon="-122.3336220">
 		<name>School of Bike</name>
 	</wpt>
@@ -79,7 +81,13 @@
 	<wpt lat="47.6648093" lon="-122.2953415">
 		<name>Counterbalance Cycles</name>
 	</wpt>
-	<trk>
+  <wpt lat="47.7532324" lon="-122.2762442">
+    <name>Track 6 connector</name>
+  </wpt>
+  <wpt lat="47.9732030" lon="-122.1965933">
+    <name>Secret Spot</name>
+  </wpt>
+  <trk>
 		<name>track1</name>
 		<desc>Length: 0.242 km (0.151 mi)</desc>
 		<trkseg>
@@ -108,7 +116,14 @@
 			<trkpt lat="47.7518979" lon="-122.2801173"></trkpt>
 			<trkpt lat="47.7519773" lon="-122.2798276"></trkpt>
 			<trkpt lat="47.7534776" lon="-122.2763085"></trkpt>
-			<trkpt lat="47.7534849" lon="-122.2759974"></trkpt>
+    </trkseg>
+  </trk>
+  <trk>
+    <name>track2aa</name>
+    <desc>Small part of track 2</desc>
+    <trkseg>
+      <trkpt lat="47.7534776" lon="-122.2763085"></trkpt>
+      <trkpt lat="47.7534849" lon="-122.2759974"></trkpt>
 			<trkpt lat="47.7559445" lon="-122.2715771"></trkpt>
 			<trkpt lat="47.7566369" lon="-122.2708261"></trkpt>
 			<trkpt lat="47.7570625" lon="-122.2700751"></trkpt>
@@ -120,8 +135,29 @@
 			<trkpt lat="47.7583536" lon="-122.2536170"></trkpt>
 			<trkpt lat="47.7583968" lon="-122.2531664"></trkpt>
       <trkpt lat="47.7587430" lon="-122.2487354"></trkpt>
+    </trkseg>
+  </trk>
+  <trk>
+    <name>track2a</name>
+    <desc>Small part of track 2</desc>
+    <trkseg>
+      <trkpt lat="47.7587430" lon="-122.2487354"></trkpt>
+      <trkpt lat="47.7591181" lon="-122.2478342"></trkpt>
+    </trkseg>
+  </trk>
+  <trk>
+    <name>track2b</name>
+    <desc>Small part of track 2</desc>
+    <trkseg>
       <trkpt lat="47.7591181" lon="-122.2478342"></trkpt>
       <trkpt lat="47.7581372" lon="-122.2493899"></trkpt>
+      <trkpt lat="47.7579641" lon="-122.2487354"></trkpt>
+    </trkseg>
+  </trk>
+  <trk>
+    <name>track2c</name>
+    <desc>Third part of track 2</desc>
+    <trkseg>
       <trkpt lat="47.7579641" lon="-122.2487354"></trkpt>
       <trkpt lat="47.7576467" lon="-122.2462678"></trkpt>
 			<trkpt lat="47.7561393" lon="-122.2372770"></trkpt>
@@ -133,7 +169,14 @@
 			<trkpt lat="47.7526409" lon="-122.2244990"></trkpt>
 			<trkpt lat="47.7525183" lon="-122.2209692"></trkpt>
 			<trkpt lat="47.7522009" lon="-122.2192311"></trkpt>
-			<trkpt lat="47.7519051" lon="-122.2183299"></trkpt>
+    </trkseg>
+  </trk>
+  <trk>
+    <name>track2d</name>
+    <desc>Fourth part of track 2</desc>
+    <trkseg>
+      <trkpt lat="47.7522009" lon="-122.2192311"></trkpt>
+      <trkpt lat="47.7519051" lon="-122.2183299"></trkpt>
 			<trkpt lat="47.7501883" lon="-122.2145212"></trkpt>
 			<trkpt lat="47.7500152" lon="-122.2138023"></trkpt>
 			<trkpt lat="47.7500729" lon="-122.2126865"></trkpt>
@@ -179,7 +222,14 @@
 			<trkpt lat="47.7556199" lon="-122.1896946"></trkpt>
 			<trkpt lat="47.7558147" lon="-122.1896732"></trkpt>
 			<trkpt lat="47.7562907" lon="-122.1891367"></trkpt>
-			<trkpt lat="47.7567523" lon="-122.1887934"></trkpt>
+    </trkseg>
+  </trk>
+  <trk>
+    <name>track2e</name>
+    <desc>Fifth part of track 2</desc>
+    <trkseg>
+      <trkpt lat="47.7562907" lon="-122.1891367"></trkpt>
+      <trkpt lat="47.7567523" lon="-122.1887934"></trkpt>
 			<trkpt lat="47.7580867" lon="-122.1895552"></trkpt>
 			<trkpt lat="47.7589955" lon="-122.1897376"></trkpt>
 			<trkpt lat="47.7594859" lon="-122.1892869"></trkpt>
@@ -403,7 +453,8 @@
 		<name>track5</name>
 		<desc>Length: 2.4 km (1.491 mi)</desc>
 		<trkseg>
-			<trkpt lat="47.7581372" lon="-122.2500229"></trkpt>
+      <trkpt lat="47.7579641" lon="-122.2487354"></trkpt>
+      <trkpt lat="47.7581372" lon="-122.2500229"></trkpt>
 			<trkpt lat="47.7506933" lon="-122.2501945"></trkpt>
 			<trkpt lat="47.7454992" lon="-122.2503662"></trkpt>
 			<trkpt lat="47.7420073" lon="-122.2492075"></trkpt>
@@ -427,7 +478,8 @@
 		<name>track7</name>
 		<desc>Length: 0.51 km (0.317 mi)</desc>
 		<trkseg>
-			<trkpt lat="47.7533190" lon="-122.2769737"></trkpt>
+      <trkpt lat="47.7532324" lon="-122.2762442"></trkpt>
+      <trkpt lat="47.7533190" lon="-122.2769737"></trkpt>
 			<trkpt lat="47.7535209" lon="-122.2774458"></trkpt>
 			<trkpt lat="47.7522802" lon="-122.2806215"></trkpt>
 			<trkpt lat="47.7515589" lon="-122.2819090"></trkpt>
@@ -438,7 +490,8 @@
 		<name>track8</name>
 		<desc>Length: 39.32 km (24.43 mi)</desc>
 		<trkseg>
-			<trkpt lat="47.7516166" lon="-122.2809219"></trkpt>
+      <trkpt lat="47.7512703" lon="-122.2826385"></trkpt>
+      <trkpt lat="47.7516166" lon="-122.2809219"></trkpt>
 			<trkpt lat="47.7563773" lon="-122.2876596"></trkpt>
 			<trkpt lat="47.7574736" lon="-122.2906208"></trkpt>
 			<trkpt lat="47.7586565" lon="-122.2915220"></trkpt>
@@ -475,7 +528,14 @@
 			<trkpt lat="47.7676281" lon="-122.3436213"></trkpt>
 			<trkpt lat="47.7679454" lon="-122.3436642"></trkpt>
       <trkpt lat="47.7692145" lon="-122.3432350"></trkpt>
-			<trkpt lat="47.7704548" lon="-122.3421192"></trkpt>
+    </trkseg>
+  </trk>
+  <trk>
+    <name>track8a</name>
+    <desc>Part of track 8</desc>
+    <trkseg>
+      <trkpt lat="47.7692145" lon="-122.3432350"></trkpt>
+      <trkpt lat="47.7704548" lon="-122.3421192"></trkpt>
 			<trkpt lat="47.7732814" lon="-122.3407888"></trkpt>
 			<trkpt lat="47.7740025" lon="-122.3409176"></trkpt>
 			<trkpt lat="47.7742332" lon="-122.3405313"></trkpt>
@@ -483,7 +543,14 @@
 			<trkpt lat="47.7826542" lon="-122.3354244"></trkpt>
 			<trkpt lat="47.7839807" lon="-122.3337078"></trkpt>
       <trkpt lat="47.7846151" lon="-122.3326778"></trkpt>
-			<trkpt lat="47.7885654" lon="-122.3331499"></trkpt>
+    </trkseg>
+  </trk>
+  <trk>
+    <name>track8b</name>
+    <desc>Part of track 8</desc>
+    <trkseg>
+      <trkpt lat="47.7846151" lon="-122.3326778"></trkpt>
+      <trkpt lat="47.7885654" lon="-122.3331499"></trkpt>
 			<trkpt lat="47.7898917" lon="-122.3325920"></trkpt>
 			<trkpt lat="47.7924001" lon="-122.3314333"></trkpt>
 			<trkpt lat="47.7926019" lon="-122.3309183"></trkpt>
@@ -522,6 +589,13 @@
 			<trkpt lat="47.8317112" lon="-122.2643566"></trkpt>
 			<trkpt lat="47.8323738" lon="-122.2643995"></trkpt>
 			<trkpt lat="47.8348801" lon="-122.2687769"></trkpt>
+      <trkpt lat="47.8350801" lon="-122.2692769"></trkpt>
+    </trkseg>
+  </trk>
+  <trk>
+    <name>track8c</name>
+    <desc>Part of track 8</desc>
+    <trkseg>
       <trkpt lat="47.8350801" lon="-122.2692769"></trkpt>
       <trkpt lat="47.8361764" lon="-122.2703218"></trkpt>
 			<trkpt lat="47.8364645" lon="-122.2689056"></trkpt>
@@ -606,7 +680,8 @@
 		<name>track9</name>
 		<desc>Length: 9.763 km (6.066 mi)</desc>
 		<trkseg>
-			<trkpt lat="47.7632723" lon="-122.3443508"></trkpt>
+      <trkpt lat="47.7692145" lon="-122.3432350"></trkpt>
+      <trkpt lat="47.7632723" lon="-122.3443508"></trkpt>
 			<trkpt lat="47.7628684" lon="-122.3456383"></trkpt>
 			<trkpt lat="47.7598105" lon="-122.3458099"></trkpt>
 			<trkpt lat="47.7572717" lon="-122.3452950"></trkpt>
@@ -620,7 +695,14 @@
 			<trkpt lat="47.7272004" lon="-122.3476124"></trkpt>
 			<trkpt lat="47.7216576" lon="-122.3483849"></trkpt>
       <trkpt lat="47.7241981" lon="-122.3459816"></trkpt>
-			<trkpt lat="47.7185972" lon="-122.3487282"></trkpt>
+    </trkseg>
+  </trk>
+  <trk>
+    <name>track9a</name>
+    <desc>Part of track 9</desc>
+    <trkseg>
+      <trkpt lat="47.7241981" lon="-122.3459816"></trkpt>
+      <trkpt lat="47.7185972" lon="-122.3487282"></trkpt>
 			<trkpt lat="47.7130534" lon="-122.3477840"></trkpt>
 			<trkpt lat="47.7085487" lon="-122.3496723"></trkpt>
 			<trkpt lat="47.6847479" lon="-122.3496723"></trkpt>
@@ -632,7 +714,8 @@
 		<name>track10</name>
 		<desc>Length: 5.599 km (3.479 mi)</desc>
 		<trkseg>
-			<trkpt lat="47.6847479" lon="-122.3498440"></trkpt>
+      <trkpt lat="47.6808186" lon="-122.3437500"></trkpt>
+      <trkpt lat="47.6847479" lon="-122.3498440"></trkpt>
 			<trkpt lat="47.6848635" lon="-122.3555088"></trkpt>
 			<trkpt lat="47.6777558" lon="-122.3550797"></trkpt>
 			<trkpt lat="47.6771201" lon="-122.3543072"></trkpt>
@@ -652,6 +735,7 @@
 		<name>track11</name>
 		<desc>Length: 16.88 km (10.49 mi)</desc>
 		<trkseg>
+      <trkpt lat="47.6464244" lon="-122.3377419"></trkpt>
 			<trkpt lat="47.6467713" lon="-122.3372269"></trkpt>
 			<trkpt lat="47.6468291" lon="-122.3338795"></trkpt>
 			<trkpt lat="47.6502985" lon="-122.3314762"></trkpt>
@@ -670,6 +754,13 @@
 			<trkpt lat="47.6661388" lon="-122.2985172"></trkpt>
 			<trkpt lat="47.6656764" lon="-122.2967148"></trkpt>
 			<trkpt lat="47.6650735" lon="-122.2955840"></trkpt>
+      <trkpt lat="47.6646735" lon="-122.2952840"></trkpt>
+    </trkseg>
+  </trk>
+  <trk>
+    <name>track11a</name>
+    <desc>Part of track 11</desc>
+    <trkseg>
       <trkpt lat="47.6646735" lon="-122.2952840"></trkpt>
       <trkpt lat="47.6641735" lon="-122.2950840"></trkpt>
       <trkpt lat="47.6626994" lon="-122.2931099"></trkpt>
@@ -699,7 +790,14 @@
 			<trkpt lat="47.6950899" lon="-122.2782612"></trkpt>
 			<trkpt lat="47.6963031" lon="-122.2775745"></trkpt>
 			<trkpt lat="47.6969385" lon="-122.2762012"></trkpt>
-			<trkpt lat="47.6978050" lon="-122.2743988"></trkpt>
+    </trkseg>
+  </trk>
+  <trk>
+    <name>track11b</name>
+    <desc>Part of track 11</desc>
+    <trkseg>
+      <trkpt lat="47.6969385" lon="-122.2762012"></trkpt>
+      <trkpt lat="47.6978050" lon="-122.2743988"></trkpt>
 			<trkpt lat="47.6987293" lon="-122.2732830"></trkpt>
 			<trkpt lat="47.6997113" lon="-122.2731113"></trkpt>
 			<trkpt lat="47.7057763" lon="-122.2755146"></trkpt>
@@ -733,7 +831,8 @@
 		<name>track12</name>
 		<desc>Length: 1.51 km (0.938 mi)</desc>
 		<trkseg>
-			<trkpt lat="47.6756898" lon="-122.2665882"></trkpt>
+      <trkpt lat="47.6969241" lon="-122.2760510"></trkpt>
+      <trkpt lat="47.6756898" lon="-122.2665882"></trkpt>
 			<trkpt lat="47.6757332" lon="-122.2586489"></trkpt>
 			<trkpt lat="47.6758487" lon="-122.2567606"></trkpt>
 			<trkpt lat="47.6759932" lon="-122.2541428"></trkpt>
@@ -750,6 +849,7 @@
 			<trkpt lat="47.6774235" lon="-122.2497439"></trkpt>
 			<trkpt lat="47.6775536" lon="-122.2495508"></trkpt>
 			<trkpt lat="47.6785215" lon="-122.2488856"></trkpt>
+      <trkpt lat="47.6784638" lon="-122.2490788"></trkpt>
 		</trkseg>
 	</trk>
 	<trk>
@@ -772,7 +872,14 @@
 			<trkpt lat="47.6814542" lon="-122.3273563"></trkpt>
 			<trkpt lat="47.6802985" lon="-122.3259830"></trkpt>
       <trkpt lat="47.6795473" lon="-122.3250389"></trkpt>
-			<trkpt lat="47.6790850" lon="-122.3263264"></trkpt>
+    </trkseg>
+  </trk>
+  <trk>
+    <name>track13a</name>
+    <desc>Part of track 13</desc>
+    <trkseg>
+      <trkpt lat="47.6795473" lon="-122.3250389"></trkpt>
+      <trkpt lat="47.6790850" lon="-122.3263264"></trkpt>
       <trkpt lat="47.6784493" lon="-122.3274422"></trkpt>
 			<trkpt lat="47.6784493" lon="-122.3289871"></trkpt>
 			<trkpt lat="47.6784493" lon="-122.3307896"></trkpt>
@@ -793,7 +900,8 @@
 			<trkpt lat="47.6784493" lon="-122.3454666"></trkpt>
 			<trkpt lat="47.6797784" lon="-122.3453808"></trkpt>
 			<trkpt lat="47.6805297" lon="-122.3443508"></trkpt>
-		</trkseg>
+      <trkpt lat="47.6808186" lon="-122.3437500"></trkpt>
+    </trkseg>
 	</trk>
 	<trk>
 		<name>track14</name>
@@ -822,6 +930,7 @@
 			<trkpt lat="47.6613410" lon="-122.3429775"></trkpt>
 			<trkpt lat="47.6619768" lon="-122.3443508"></trkpt>
 			<trkpt lat="47.6621503" lon="-122.3535347"></trkpt>
+      <trkpt lat="47.6464244" lon="-122.3377419"></trkpt>
 		</trkseg>
 	</trk>
 	<trk>
@@ -830,6 +939,7 @@
 		<trkseg>
 			<trkpt lat="47.6612831" lon="-122.3337078"></trkpt>
 			<trkpt lat="47.6475809" lon="-122.3337078"></trkpt>
+      <trkpt lat="47.6530738" lon="-122.3175716"></trkpt>
 		</trkseg>
 	</trk>
 	<trk>
@@ -849,6 +959,7 @@
       <trkpt lat="47.6535097" lon="-122.3175008"></trkpt>
       <trkpt lat="47.6537097" lon="-122.3180008"></trkpt>
 			<trkpt lat="47.6535941" lon="-122.3137951"></trkpt>
+      <trkpt lat="47.6648093" lon="-122.2953415"></trkpt>
 		</trkseg>
 	</trk>
 	<trk>

@@ -2,32 +2,42 @@
 using GPX;
 using System;
 using System.Collections.Generic;
+using System.ComponentModel;
 using System.IO;
 
 namespace BikeMap
 {
+    /// <summary>
+    /// A graph with vertices connected by edges constructed from a GPX file
+    /// </summary>
     public class Graph
     {
         /// <summary>
-        /// The vertices in the graph
+        /// The vertices for the points of interest in the gpx file, only points in graph
         /// </summary>
         public List<Vertex> Vertices { get; protected set; }
         /// <summary>
         /// The points of interest in the gpx file
         /// </summary>
-        public List<WayPoint> Waypoints { get; protected set; }
+        public List<WayPoint> Waypoints { get; set; }
         /// <summary>
         /// The tracks in the gpx file
         /// </summary>
         public List<Track> Tracks { get; protected set; }
 
-        public Edge[,] edges;
+        /// <summary>
+        /// Default constructor
+        /// </summary>
         protected Graph()
         {
-            Vertices = new List<Vertex>();
             Tracks = new List<Track>();
             Waypoints = new List<WayPoint>();
+            Vertices = new List<Vertex>();
         }
+        /// <summary>
+        /// Create the graph from a GPX file
+        /// </summary>
+        /// <param name="gpx">gpx file</param>
         public Graph(string gpx) : this()
         {
             // Read in the GPX file
@@ -62,48 +72,38 @@ namespace BikeMap
 
             // We finally know how many vertices we have so we can construct the matrix
             CreateEdges(Tracks);
-
-            FloydWarshall();
         }
-
-        public const double MinDist = 0.020; // 20 m in units of km
+        /// <summary>
+        /// Minimum distance
+        /// </summary>
+        public const double MinDist = 50; // 20 m in units of km
+        /// <summary>
+        /// Create the edges from the tracks
+        /// </summary>
+        /// <param name="tracks">list of tracks</param>
         private void CreateEdges(List<Track> tracks)
         {
-             int idx = 0;
+            int idx = 0;
             foreach (WayPoint pt in Waypoints)
             {
-                Vertices.Add(new Vertex(pt, idx++));
+                Vertex vertex = new PointOfInterest(pt, idx++);
+                Vertices.Add(vertex);
             }
 
             // Now fill in the Edge matrix.  Points along the various tracks only connect to each other
             // Waypoints connect if they are with minDist meters of a point.
             foreach (Track track in tracks)
             {
+                Edge edge = new Edge(track);
                 var points = track.ToWayPoints();
-                int trackStart = idx;
-                Vertex v1 = new Vertex(points[0], idx++);
-                Vertices.Add(v1);
-                for (int ip = 1; ip < points.Count; idx++, ip++)
+                List<Vertex> vertices = new List<Vertex>();
+                for (int ip = 0; ip < points.Count; idx++, ip++)
                 {
-                    Vertex v2 = new Vertex(points[ip], idx);
-                    Edge edge = new Edge(v1, v2);
-                    v1.Edges.Add(edge);
-                    v2.Edges.Add(edge);
-
-                    // See if any of the waypoints are close enough to say they are connected
-                    for (int iwpt = 0; iwpt < Waypoints.Count; iwpt++)
-                    {
-                        edge = new Edge(v1, Vertices[iwpt]);
-                        if (edge.Weight < MinDist)
-                        {
-                            Vertices[iwpt].Edges.Add(edge);
-                            v1.Edges.Add(edge);
-                        }
-                    }
+                    vertices.Add(new Vertex(points[ip], ip));
                 }
                 for (int iwp = 0; iwp < Waypoints.Count; iwp++)
                 {
-                    ((PointOfInterest)Vertices[iwp]).FindEdges(track, Vertices, trackStart);
+                    ((PointOfInterest)Vertices[iwp]).FindEdges(edge, vertices);
                 }
             }
             double trigger = 0;
@@ -121,10 +121,10 @@ namespace BikeMap
                 {
                     if ((track != null) && (info.track.Equals(track)))
                     {
-                        Console.WriteLine("Waypoint {0} is connected to {1} at {2} and {3}",
-                            poi.Point.Name, track.Name, info.point.ToString());
+                        Console.WriteLine("Waypoint {0} is connected to {1} at {2}",
+                            poi.Point.Name, track.Name, info.index.ToString());
                     }
-                    track = info.track;
+                    track = info.track.Track;
                 }
             }
         }
@@ -143,9 +143,19 @@ namespace BikeMap
                        dist[i][j] ← dist[i][k] + dist[k][j]
                        next[i][j] ← next[i][k]
                        */
+        /// <summary>
+        /// Array of distances initialized to infinity
+        /// </summary>
         protected double[,] dist;
+        /// <summary>
+        /// Array of connections between vertices, null indicates no connection
+        /// </summary>
         protected int?[,] next;
-        public void FloydWarshall()
+        /// <summary>
+        /// Use the Floyd-Warshall algorithm to find the shortest path between all of the vertices
+        /// in the graph.  Provide status to the backgroundworker as it goes
+        /// </summary>
+        public void FloydWarshall(BackgroundWorker worker)
         {
             // define and initialize dist and next matrices
             InitializeMatrices();
@@ -170,6 +180,7 @@ namespace BikeMap
                         }
                     }
                 }
+                worker.ReportProgress(ipass * 100 / Vertices.Count);
             }
         }
         /// <summary>

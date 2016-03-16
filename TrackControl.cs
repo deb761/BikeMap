@@ -178,7 +178,7 @@ namespace GPX
             set { _TrackColorHighlight = value; }
         }
 
-        private float _TrackThickness = 3.0f;
+        private float _TrackThickness = 1.0f;
         public float TrackThickness
         {
             get { return _TrackThickness; }

@@ -32,15 +32,15 @@
             this.label1 = new System.Windows.Forms.Label();
             this.textBox1 = new System.Windows.Forms.TextBox();
             this.button1 = new System.Windows.Forms.Button();
-            this.textBox2 = new System.Windows.Forms.TextBox();
             this.label2 = new System.Windows.Forms.Label();
-            this.textBox3 = new System.Windows.Forms.TextBox();
             this.label3 = new System.Windows.Forms.Label();
-            this.textBox4 = new System.Windows.Forms.TextBox();
+            this.bxShortest = new System.Windows.Forms.TextBox();
             this.label4 = new System.Windows.Forms.Label();
             this.bgWorker = new System.ComponentModel.BackgroundWorker();
             this.progressBar = new System.Windows.Forms.ProgressBar();
             this.lblProgress = new System.Windows.Forms.Label();
+            this.cbxStart = new System.Windows.Forms.ComboBox();
+            this.cbxEnd = new System.Windows.Forms.ComboBox();
             this.trackControl = new GPX.TrackControl();
             this.settingsBindingSource = new System.Windows.Forms.BindingSource(this.components);
             ((System.ComponentModel.ISupportInitialize)(this.settingsBindingSource)).BeginInit();
@@ -72,14 +72,6 @@
             this.button1.Text = "Browse";
             this.button1.UseVisualStyleBackColor = true;
             // 
-            // textBox2
-            // 
-            this.textBox2.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.settingsBindingSource, "Start", true));
-            this.textBox2.Location = new System.Drawing.Point(65, 36);
-            this.textBox2.Name = "textBox2";
-            this.textBox2.Size = new System.Drawing.Size(314, 20);
-            this.textBox2.TabIndex = 4;
-            // 
             // label2
             // 
             this.label2.AutoSize = true;
@@ -88,14 +80,6 @@
             this.label2.Size = new System.Drawing.Size(42, 13);
             this.label2.TabIndex = 3;
             this.label2.Text = "Start Pt";
-            // 
-            // textBox3
-            // 
-            this.textBox3.DataBindings.Add(new System.Windows.Forms.Binding("Text", this.settingsBindingSource, "Destination", true));
-            this.textBox3.Location = new System.Drawing.Point(65, 65);
-            this.textBox3.Name = "textBox3";
-            this.textBox3.Size = new System.Drawing.Size(314, 20);
-            this.textBox3.TabIndex = 6;
             // 
             // label3
             // 
@@ -106,12 +90,12 @@
             this.label3.TabIndex = 5;
             this.label3.Text = "Destination";
             // 
-            // textBox4
+            // bxShortest
             // 
-            this.textBox4.Location = new System.Drawing.Point(458, 52);
-            this.textBox4.Name = "textBox4";
-            this.textBox4.Size = new System.Drawing.Size(79, 20);
-            this.textBox4.TabIndex = 7;
+            this.bxShortest.Location = new System.Drawing.Point(458, 52);
+            this.bxShortest.Name = "bxShortest";
+            this.bxShortest.Size = new System.Drawing.Size(79, 20);
+            this.bxShortest.TabIndex = 7;
             // 
             // label4
             // 
@@ -144,6 +128,24 @@
             this.lblProgress.Size = new System.Drawing.Size(75, 13);
             this.lblProgress.TabIndex = 10;
             this.lblProgress.Text = "Loading Paths";
+            // 
+            // cbxStart
+            // 
+            this.cbxStart.FormattingEnabled = true;
+            this.cbxStart.Location = new System.Drawing.Point(65, 36);
+            this.cbxStart.Name = "cbxStart";
+            this.cbxStart.Size = new System.Drawing.Size(314, 21);
+            this.cbxStart.TabIndex = 12;
+            this.cbxStart.SelectedIndexChanged += new System.EventHandler(this.cbxEnd_SelectedIndexChanged);
+            // 
+            // cbxEnd
+            // 
+            this.cbxEnd.FormattingEnabled = true;
+            this.cbxEnd.Location = new System.Drawing.Point(65, 64);
+            this.cbxEnd.Name = "cbxEnd";
+            this.cbxEnd.Size = new System.Drawing.Size(314, 21);
+            this.cbxEnd.TabIndex = 13;
+            this.cbxEnd.SelectedIndexChanged += new System.EventHandler(this.cbxEnd_SelectedIndexChanged);
             // 
             // trackControl
             // 
@@ -187,14 +189,14 @@
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.ClientSize = new System.Drawing.Size(984, 497);
+            this.Controls.Add(this.cbxEnd);
+            this.Controls.Add(this.cbxStart);
             this.Controls.Add(this.trackControl);
             this.Controls.Add(this.lblProgress);
             this.Controls.Add(this.progressBar);
             this.Controls.Add(this.label4);
-            this.Controls.Add(this.textBox4);
-            this.Controls.Add(this.textBox3);
+            this.Controls.Add(this.bxShortest);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.textBox2);
             this.Controls.Add(this.label2);
             this.Controls.Add(this.button1);
             this.Controls.Add(this.textBox1);
@@ -214,17 +216,17 @@
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.TextBox textBox1;
         private System.Windows.Forms.Button button1;
-        private System.Windows.Forms.TextBox textBox2;
         private System.Windows.Forms.Label label2;
-        private System.Windows.Forms.TextBox textBox3;
         private System.Windows.Forms.Label label3;
-        private System.Windows.Forms.TextBox textBox4;
+        private System.Windows.Forms.TextBox bxShortest;
         private System.Windows.Forms.Label label4;
         private System.ComponentModel.BackgroundWorker bgWorker;
         private System.Windows.Forms.ProgressBar progressBar;
         private System.Windows.Forms.Label lblProgress;
         private GPX.TrackControl trackControl;
         private System.Windows.Forms.BindingSource settingsBindingSource;
+        private System.Windows.Forms.ComboBox cbxStart;
+        private System.Windows.Forms.ComboBox cbxEnd;
     }
 }
 
